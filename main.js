@@ -1,6 +1,8 @@
 // Globals
 const WINDOW_SIZE = 10;
 
+//---- MATHS ----//
+
 // Keep screen / output to 10-characters.
 function roundIfNeeded(value) {
     if (value.toString().length > WINDOW_SIZE) {
@@ -20,12 +22,12 @@ function subtract(a, b) {
     return roundIfNeeded(Number(a) - Number(b));
 }
 
-// add, typecasting to number just in case
+// multiply, typecasting to number just in case
 function multiply(a, b) {
     return roundIfNeeded(Number(a) * Number(b));
 }
 
-// add, typecasting to number just in case
+// divide, checking for division by zero and typecasting to number just in case
 function divide(a, b) {
     switch (b) {
         case 0:
@@ -35,6 +37,21 @@ function divide(a, b) {
             return roundIfNeeded(Number(a) / Number(b));
     }
 }
+
+
+//---- GUI ----//
+const CALCULATOR_BUTTONS = 16;
+const container = document.querySelector(".container");
+
+// Following 2 event listeners used to listen for the mouse hovering and eventually exiting any of the buttons housed within the container. CSS is protecting from screen color changing since the hover rule only applies to button types
+container.addEventListener('mouseover', (event) => {
+  event.target.classList.add('hover');
+});
+
+container.addEventListener('mouseout', (event) => {
+  event.target.classList.remove('hover');
+});
+
 
 // operation will consist of a number, an operator, and another number. For example, 3 + 5. Create three variables, one for each part of the operation. You’ll use these variables to update your display later.
 
