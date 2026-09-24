@@ -5,37 +5,37 @@ const WINDOW_SIZE = 10;
 
 // Keep screen / output to 10-characters.
 function roundIfNeeded(value) {
-    if (value.toString().length > WINDOW_SIZE) {
-        return Number(value.toPrecision(10));
-    } else {
-        return value;
-    }
+  if (value.toString().length > WINDOW_SIZE) {
+      return Number(value.toPrecision(10));
+  } else {
+      return value;
+  }
 }
 
 // add, typecasting to number just in case
 function add(a, b) {
-    return roundIfNeeded(Number(a) + Number(b));
+  return roundIfNeeded(Number(a) + Number(b));
 }
 
 // subtract, typecasting to number just in case
 function subtract(a, b) {
-    return roundIfNeeded(Number(a) - Number(b));
+  return roundIfNeeded(Number(a) - Number(b));
 }
 
 // multiply, typecasting to number just in case
 function multiply(a, b) {
-    return roundIfNeeded(Number(a) * Number(b));
+  return roundIfNeeded(Number(a) * Number(b));
 }
 
 // divide, checking for division by zero and typecasting to number just in case
 function divide(a, b) {
-    switch (b) {
-        case 0:
-            window.alert("You can't divide by zero silly...Woodeboogah!")
-            break;
-        default:
-            return roundIfNeeded(Number(a) / Number(b));
-    }
+  switch (b) {
+      case 0:
+          window.alert("You can't divide by zero silly...Woodeboogah!")
+          break;
+      default:
+          return roundIfNeeded(Number(a) / Number(b));
+  }
 }
 
 
@@ -52,6 +52,27 @@ container.addEventListener('mouseout', (event) => {
   event.target.classList.remove('hover');
 });
 
+/**
+ * This event listener needs to: 
+ * - Detect the click
+ * - Determine what got clicked
+ * - If it is an operand, place it into an appropriate variable
+ * - If it is an operator, take action on what you have and move to the next step
+ */
+container.addEventListener('click', (event) => {
+  console.log(event.target.className);
+  console.log(typeof(event.target.className));
+
+  if (event.target.className.includes("num")) {
+    window.alert("Number pressed");
+  }
+  else if (event.target.className.includes("modifier")) {
+    window.alert("Modifier pressed");
+  }
+  else if (event.target.className.includes("operator")) {
+    window.alert("Operator pressed");
+  }
+});
 
 // operation will consist of a number, an operator, and another number. For example, 3 + 5. Create three variables, one for each part of the operation. You’ll use these variables to update your display later.
 
