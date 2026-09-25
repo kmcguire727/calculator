@@ -1,7 +1,35 @@
 // Globals
 const WINDOW_SIZE = 10;
+//strings for simplicity on the operands to push values onto then cast when needed
+let operand1 = "";  
+let operator = "";
+let operand2 = "";
+let solution = null;
+let phase = 1;
 
-//---- MATHS ----//
+//---- FUNCTIONS ----//
+
+function clearScreen() {
+  return 1;
+}
+
+function containsSpecial(value) {
+  // A defined list of common special characters
+  const specialChars = ["CE", ".", "%", "X", "-", "+", "="];
+  return specialChars.includes(value);
+}
+
+function findButtonType(classNameString) {
+  if (classNameString.includes("num")) {
+    return "Number";
+  }
+  else if (classNameString.includes("modifier")) {
+    return "Modifier";
+  }
+  else if (classNameString.includes("operator")) {
+    return "Operator";
+  }
+}
 
 // Keep screen / output to 10-characters.
 function roundIfNeeded(value) {
@@ -38,6 +66,26 @@ function divide(a, b) {
   }
 }
 
+function operate(a, operation, b) {
+  let ans = null;
+
+  switch (operation) {
+    case "+":
+      ans = add(a, b);
+      break;
+    case "-":
+      ans = subtract(a, b);
+      break;
+    case "%":
+      ans = divide(a, b);
+      break;
+    case "X":
+      ans = multiply(a, b);
+      break;
+  }
+
+  return ans;
+}
 
 //---- GUI ----//
 const CALCULATOR_BUTTONS = 16;
@@ -60,18 +108,49 @@ container.addEventListener('mouseout', (event) => {
  * - If it is an operator, take action on what you have and move to the next step
  */
 container.addEventListener('click', (event) => {
-  console.log(event.target.className);
-  console.log(typeof(event.target.className));
+  let value = event.target.innerText;
+  let buttonType = findButtonType(event.target.className);
+  
+  console.log(`Value = ${value}\nType = ${buttonType}`);
 
-  if (event.target.className.includes("num")) {
-    window.alert("Number pressed");
+  switch (phase) {
+    case 1:
+      if (value === "CE") {
+        clearScreen();
+        operand1 = "";
+      }
+      else if (buttonType != "Operator") {
+        operand1 += value;
+      } 
+      else if (buttonType === "Operator"){
+        clearScreen();
+        operator = value;
+        phase = 2;
+      }
+      break;
+
+    case 2:
+      if (value === "CE") {
+        clearScreen();
+        operand2 = "";
+      }
+      else if (buttonType != "Operator") {
+        operand2 += value;
+      } 
+      else if (value === "="){
+        clearScreen();
+        solution = operate(Number(operand1), operator, Number(operand2));
+        phase = 3;
+        // NEED TO DETERMINE IF PHASE 3 IS THE RIGHT THING
+      }
+      else {
+        window.alert("You can't put another operator in silly...Woodeboogah!")
+      }
+      break;
   }
-  else if (event.target.className.includes("modifier")) {
-    window.alert("Modifier pressed");
-  }
-  else if (event.target.className.includes("operator")) {
-    window.alert("Operator pressed");
-  }
+
+  console.log(`Operand 1 = ${operand1}\nOperator = ${operator}\nOperand 3 = ${operand2}\nSolution = ${solution}`);
+
 });
 
 // operation will consist of a number, an operator, and another number. For example, 3 + 5. Create three variables, one for each part of the operation. You’ll use these variables to update your display later.
