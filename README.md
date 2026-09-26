@@ -1,7 +1,9 @@
 # Calculator
  
 A vanilla HTML/CSS/JS calculator built for [The Odin Project](https://www.theodinproject.com/lessons/foundations-calculator)'s Foundations curriculum, styled after a 1970s FACIT desktop calculator.
- 
+
+<img src="img/screenshot.png" width="400">
+
 **Live demo:** https://kmcguire727.github.io/calculator/ 
 
 ## Features
